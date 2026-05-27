@@ -21,7 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * - Uses a ConcurrentHashMap keyed by IP address — no external library needed.
  * - A background thread resets all counters every 60 seconds.
  * - Responds with HTTP 429 Too Many Requests when the limit is exceeded.
- * - Applies to all /api/** routes automatically (registered as a Servlet Filter).
+ * - Applies to all /api/** routes automatically (registered as a Servlet
+ * Filter).
  */
 @Component
 public class RateLimitFilter implements Filter {
@@ -43,7 +44,7 @@ public class RateLimitFilter implements Filter {
                 }
             }
         });
-        resetter.setDaemon(true);   // dies when the JVM shuts down
+        resetter.setDaemon(true); // dies when the JVM shuts down
         resetter.setName("rate-limit-resetter");
         resetter.start();
     }
@@ -52,7 +53,7 @@ public class RateLimitFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        HttpServletRequest  httpReq  = (HttpServletRequest)  request;
+        HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpResp = (HttpServletResponse) response;
 
         String ip = httpReq.getRemoteAddr();
@@ -64,8 +65,8 @@ public class RateLimitFilter implements Filter {
             httpResp.setStatus(429);
             httpResp.setContentType("application/json");
             httpResp.getWriter().write(
-                "{\"error\": \"Too many requests. Limit: "
-                + MAX_REQUESTS_PER_MINUTE + " per minute.\"}");
+                    "{\"error\": \"Too many requests. Limit: "
+                            + MAX_REQUESTS_PER_MINUTE + " per minute.\"}");
             return;
         }
 

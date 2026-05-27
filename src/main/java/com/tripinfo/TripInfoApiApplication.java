@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Bean;
 public class TripInfoApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(tripinfoApiApplication.class, args);
+        SpringApplication.run(TripInfoApiApplication.class, args);
     }
 
     /**

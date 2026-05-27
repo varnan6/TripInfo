@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 /**
  * Handles trip-level CRUD endpoints.
  *
- * GET  /api/trips   - returns all valid trips loaded from the CSV
- * POST /api/trips   - validates and adds a new trip to the in-memory store
+ * GET /api/trips - returns all valid trips loaded from the CSV
+ * POST /api/trips - validates and adds a new trip to the in-memory store
  *
  * Controllers are kept thin: no business logic lives here.
  * All domain objects are converted to/from DTOs at this layer.
@@ -71,8 +71,7 @@ public class TripController {
                 vehicleType,
                 request.getTripDistanceKm(),
                 request.getFarePaid(),
-                request.getCustomerRating()
-        );
+                request.getCustomerRating());
 
         tripStore.add(trip);
         return ResponseEntity.status(HttpStatus.CREATED)

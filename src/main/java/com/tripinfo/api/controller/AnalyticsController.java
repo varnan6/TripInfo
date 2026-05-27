@@ -20,28 +20,27 @@ import java.util.stream.Collectors;
 /**
  * All read-only analytics endpoints.
  *
- * GET /api/analytics/driver-ratings         - avg rating per driver, desc
- * GET /api/analytics/most-efficient-trip    - highest fare/km trip
+ * GET /api/analytics/driver-ratings - avg rating per driver, desc
+ * GET /api/analytics/most-efficient-trip - highest fare/km trip
  * GET /api/analytics/underperforming-drivers - avg rating < 3.5, asc
- * GET /api/analytics/summary                - combined report
+ * GET /api/analytics/summary - combined report
  *
  * Every endpoint fetches a fresh snapshot from TripStore so that trips
  * added via POST /api/trips are immediately reflected.
  */
-
 
 @RestController
 @RequestMapping("/api/analytics") // base URL path for analytics endpoints.
 public class AnalyticsController {
 
     // trip store and analyser object attributes.
-    private final TripStore    tripStore;
+    private final TripStore tripStore;
     private final TripAnalyzer analyzer;
 
     // Fully parameterised constructors.
     public AnalyticsController(TripStore tripStore, TripAnalyzer analyzer) {
         this.tripStore = tripStore;
-        this.analyzer  = analyzer;
+        this.analyzer = analyzer;
     }
 
     /**
@@ -121,7 +120,7 @@ public class AnalyticsController {
 
         SummaryResponse summary = new SummaryResponse();
         summary.setTotalValidTrips(trips.size());
-        summary.setTotalInvalidTrips(0);   // see Javadoc above
+        summary.setTotalInvalidTrips(0); // see Javadoc above
         summary.setDriverRatings(driverRatings);
         summary.setMostEfficientTrip(best.map(EfficientTripResponse::from).orElse(null));
         summary.setUnderperformingDrivers(underperforming);

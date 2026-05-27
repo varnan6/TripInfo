@@ -15,14 +15,15 @@ public class TripResponse {
     private double farePaid;
     private double customerRating;
 
-    public TripResponse() {}
+    public TripResponse() {
+    }
 
     // Protected constructor so subclasses can populate all base fields in one call
     protected TripResponse(Trip t) {
-        this.driverId       = t.getDriverId();
-        this.vehicleType    = t.getVehicleType().getDisplayName();
+        this.driverId = t.getDriverId();
+        this.vehicleType = t.getVehicleType().getDisplayName();
         this.tripDistanceKm = t.getTripDistanceKm();
-        this.farePaid       = t.getFarePaid();
+        this.farePaid = t.getFarePaid();
         this.customerRating = t.getCustomerRating();
     }
 
@@ -30,9 +31,23 @@ public class TripResponse {
         return new TripResponse(t);
     }
 
-    public String getDriverId()       { return driverId; }
-    public String getVehicleType()    { return vehicleType; }
-    public double getTripDistanceKm() { return tripDistanceKm; }
-    public double getFarePaid()       { return farePaid; }
-    public double getCustomerRating() { return customerRating; }
+    public String getDriverId() {
+        return driverId;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public double getTripDistanceKm() {
+        return tripDistanceKm;
+    }
+
+    public double getFarePaid() {
+        return farePaid;
+    }
+
+    public double getCustomerRating() {
+        return customerRating;
+    }
 }

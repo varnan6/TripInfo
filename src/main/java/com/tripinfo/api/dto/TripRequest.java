@@ -30,15 +30,43 @@ public class TripRequest {
     private Double customerRating;
 
     // Getters & setters (no Lombok per assignment constraints)
-    public String  getDriverId()       { return driverId; }
-    public String  getVehicleType()    { return vehicleType; }
-    public Double  getTripDistanceKm() { return tripDistanceKm; }
-    public Double  getFarePaid()       { return farePaid; }
-    public Double  getCustomerRating() { return customerRating; }
+    public String getDriverId() {
+        return driverId;
+    }
 
-    public void setDriverId(String driverId)             { this.driverId = driverId; }
-    public void setVehicleType(String vehicleType)        { this.vehicleType = vehicleType; }
-    public void setTripDistanceKm(Double tripDistanceKm)  { this.tripDistanceKm = tripDistanceKm; }
-    public void setFarePaid(Double farePaid)              { this.farePaid = farePaid; }
-    public void setCustomerRating(Double customerRating)  { this.customerRating = customerRating; }
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public Double getTripDistanceKm() {
+        return tripDistanceKm;
+    }
+
+    public Double getFarePaid() {
+        return farePaid;
+    }
+
+    public Double getCustomerRating() {
+        return customerRating;
+    }
+
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public void setTripDistanceKm(Double tripDistanceKm) {
+        this.tripDistanceKm = tripDistanceKm;
+    }
+
+    public void setFarePaid(Double farePaid) {
+        this.farePaid = farePaid;
+    }
+
+    public void setCustomerRating(Double customerRating) {
+        this.customerRating = customerRating;
+    }
 }

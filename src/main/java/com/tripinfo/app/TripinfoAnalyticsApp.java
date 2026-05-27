@@ -19,10 +19,10 @@ import java.util.Optional;
  * runs all analytics, and prints the results to stdout.
  *
  * Run:
- *   javac -d out src/**{@literal /}*.java
- *   java -cp out com.tripinfo.app.TripInfoAnalyticsApp
+ * javac -d out src/**{@literal /}*.java
+ * java -cp out com.tripinfo.app.TripInfoAnalyticsApp
  * Or with a custom data file:
- *   java -cp out com.tripinfo.app.TripInfoAnalyticsApp path/to/trips.csv
+ * java -cp out com.tripinfo.app.TripInfoAnalyticsApp path/to/trips.csv
  */
 public class TripInfoAnalyticsApp {
 
@@ -69,8 +69,7 @@ public class TripInfoAnalyticsApp {
         if (ratings.isEmpty()) {
             System.out.println("  No trips available.");
         } else {
-            ratings.forEach(ds ->
-                System.out.printf("  %-8s -> %.2f%n", ds.getDriverId(), ds.getAverageRating()));
+            ratings.forEach(ds -> System.out.printf("  %-8s -> %.2f%n", ds.getDriverId(), ds.getAverageRating()));
         }
 
         // 4b. Most efficient trip (highest fare/km, zero-distance excluded)
@@ -82,9 +81,9 @@ public class TripInfoAnalyticsApp {
             Trip t = best.get();
             System.out.println("  Driver  : " + t.getDriverId());
             System.out.println("  Vehicle : " + t.getVehicleType().getDisplayName());
-            System.out.printf( "  Distance: %.1f km%n", t.getTripDistanceKm());
-            System.out.printf( "  Fare    : %.2f%n",    t.getFarePaid());
-            System.out.printf( "  Earnings Per Km: %.2f%n", t.getEarningsPerKm());
+            System.out.printf("  Distance: %.1f km%n", t.getTripDistanceKm());
+            System.out.printf("  Fare    : %.2f%n", t.getFarePaid());
+            System.out.printf("  Earnings Per Km: %.2f%n", t.getEarningsPerKm());
         }
 
         // 4c. Underperforming drivers (avg rating < 3.5, ascending)
@@ -93,9 +92,8 @@ public class TripInfoAnalyticsApp {
         if (underperforming.isEmpty()) {
             System.out.println("  No underperforming drivers found.");
         } else {
-            underperforming.forEach(ds ->
-                System.out.printf("  %-8s -> Average Rating: %.2f%n",
-                        ds.getDriverId(), ds.getAverageRating()));
+            underperforming.forEach(ds -> System.out.printf("  %-8s -> Average Rating: %.2f%n",
+                    ds.getDriverId(), ds.getAverageRating()));
         }
 
         System.out.println("\n==========================================");

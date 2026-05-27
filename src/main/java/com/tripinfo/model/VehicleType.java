@@ -19,7 +19,8 @@ public enum VehicleType {
         return displayName;
     }
 
-    // Function returning "VehicleType" object from given string by checking for a valid vehicle type.
+    // Function returning "VehicleType" object from given string by checking for a
+    // valid vehicle type.
     public static VehicleType fromString(String strRaw) {
         if (strRaw == null || strRaw.isBlank()) {
             throw new IllegalArgumentException("Vehicle type string is null or blank.");

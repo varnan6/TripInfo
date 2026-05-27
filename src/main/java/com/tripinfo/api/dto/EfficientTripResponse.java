@@ -6,7 +6,8 @@ public class EfficientTripResponse extends TripResponse {
 
     private double earningsPerKm;
 
-    public EfficientTripResponse() {}
+    public EfficientTripResponse() {
+    }
 
     // Calls parent protected constructor for the 5 shared fields,
     // then sets the one field this subclass owns
@@ -19,5 +20,7 @@ public class EfficientTripResponse extends TripResponse {
         return new EfficientTripResponse(t);
     }
 
-    public double getEarningsPerKm() { return earningsPerKm; }
+    public double getEarningsPerKm() {
+        return earningsPerKm;
+    }
 }

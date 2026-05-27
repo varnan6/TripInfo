@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
  * always receives a structured body instead of a raw Spring error page.
  *
  * Handled cases:
- * - @Valid failures on POST body  → 400 with per-field messages
- * - Unknown routes                → 404 with a friendly message
- * - Unexpected runtime errors     → 500 (generic, no internal detail leaked)
+ * - @Valid failures on POST body → 400 with per-field messages
+ * - Unknown routes → 404 with a friendly message
+ * - Unexpected runtime errors → 500 (generic, no internal detail leaked)
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("error",   "Validation failed");
+        body.put("error", "Validation failed");
         body.put("details", fieldErrors);
         return ResponseEntity.badRequest().body(body);
     }
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
     /** Catch-all — never leak stack traces to the client. */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneric(Exception ex) {
-        ex.printStackTrace();   // log server-side only
+        ex.printStackTrace(); // log server-side only
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Map.of("error", "An unexpected error occurred."));
     }

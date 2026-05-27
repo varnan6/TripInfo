@@ -15,15 +15,16 @@ import java.util.List;
 /**
  * Runs once at startup (implements ApplicationRunner).
  * Reads the CSV file, parses it, and loads valid trips into TripStore.
- * Invalid records are logged to stdout. It has the same behaviour as the console app.
+ * Invalid records are logged to stdout. It has the same behaviour as the
+ * console app.
  */
 
 @Component
 public class DataLoader implements ApplicationRunner {
 
     // Private attributes
-    private final TripStore   tripStore;
-    private final TripParser  parser;
+    private final TripStore tripStore;
+    private final TripParser parser;
 
     // Inject the data from .csv file to the string below
     @Value("${app.data.file:trips.csv}")
@@ -32,13 +33,13 @@ public class DataLoader implements ApplicationRunner {
     // Full parameterised constructor
     public DataLoader(TripStore tripStore, TripParser parser) {
         this.tripStore = tripStore;
-        this.parser    = parser;
+        this.parser = parser;
     }
 
     // Runs the dataloader's function for reading the data file contexts.
     @Override
     public void run(ApplicationArguments args) {
-        
+
         System.out.println("[DataLoader] Reading: " + dataFile);
 
         List<String> rawLines;
@@ -57,7 +58,7 @@ public class DataLoader implements ApplicationRunner {
         // Printing parsing information
         System.out.println("[DataLoader] Loaded " + result.getValidTrips().size()
                 + " valid trips, " + result.getErrors().size() + " skipped.");
-        
+
         // Printing all parsing errors
         result.getErrors().forEach(err -> System.out.println("[DataLoader] SKIP: " + err));
     }
