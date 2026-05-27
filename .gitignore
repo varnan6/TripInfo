@@ -1,2 +1,5 @@
-out
-target
+out/
+target/
+*.class
+
+.mvn/repository/
