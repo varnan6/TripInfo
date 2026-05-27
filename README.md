@@ -41,6 +41,8 @@ src/main/java/com/tripinfo/
     TripAnalyzer.java          All analytics logic (grouping, sorting, filtering)
     TripStore.java             Thread-safe in-memory trip list (CopyOnWriteArrayList)
     DataLoader.java            Reads trips.csv into TripStore on Spring Boot startup
+  app/
+    TripInfoAnalyticsApp.java  Console application entry point
   api/
     GlobalExceptionHandler.java  @Valid errors → 400 JSON; unknown routes → 404 JSON
     controller/
@@ -64,11 +66,12 @@ pom.xml                          Maven build — Spring Boot 3.2.5, web + valida
 ## How to Compile and Run — Console Application
 
 The console application uses **standard Java only** (no Maven needed).
+Run all commands from the **project root** (`TripInfo/`) so that `trips.csv` is found correctly.
 
-### Compile
+### Compile (macOS / Linux)
 
 ```bash
-javac -d out -sourcepath src/main/java \
+javac -d out \
   src/main/java/com/tripinfo/model/VehicleType.java \
   src/main/java/com/tripinfo/model/Trip.java \
   src/main/java/com/tripinfo/parser/TripParseException.java \
@@ -76,22 +79,33 @@ javac -d out -sourcepath src/main/java \
   src/main/java/com/tripinfo/parser/TripParser.java \
   src/main/java/com/tripinfo/service/DriverSummary.java \
   src/main/java/com/tripinfo/service/TripAnalyzer.java \
-  src/main/java/com/tripinfo/app/DataProvider.java \
-  src/main/java/com/tripinfo/app/ConsolePrinter.java \
-  src/main/java/com/tripinfo/app/RideHailingAnalyticsApp.java
+  src/main/java/com/tripinfo/app/TripInfoAnalyticsApp.java
+```
+
+### Compile (Windows PowerShell)
+
+```powershell
+mkdir out
+javac -d out `
+  src\main\java\com\tripinfo\model\VehicleType.java `
+  src\main\java\com\tripinfo\model\Trip.java `
+  src\main\java\com\tripinfo\parser\TripParseException.java `
+  src\main\java\com\tripinfo\parser\ParseResult.java `
+  src\main\java\com\tripinfo\parser\TripParser.java `
+  src\main\java\com\tripinfo\service\DriverSummary.java `
+  src\main\java\com\tripinfo\service\TripAnalyzer.java `
+  src\main\java\com\tripinfo\app\TripInfoAnalyticsApp.java
 ```
 
 ### Run
 
 ```bash
 # Uses trips.csv in the current directory by default
-java -cp out com.tripinfo.app.RideHailingAnalyticsApp
+java -cp out com.tripinfo.app.TripInfoAnalyticsApp
 
 # Or pass an explicit path to any CSV file
-java -cp out com.tripinfo.app.RideHailingAnalyticsApp path/to/yourfile.csv
+java -cp out com.tripinfo.app.TripInfoAnalyticsApp path/to/yourfile.csv
 ```
-
-Place `trips.csv` in the directory from which you run the command if using the default.
 
 ---
 
@@ -243,63 +257,40 @@ terminates on a single bad row. All errors are printed together after processing
 ## Sample Console Output
 
 ```
-=======================================================
-   RIDE-HAILING DRIVER PERFORMANCE ANALYTICS TOOL
-=======================================================
+==========================================
+ Ride-Hailing Driver Performance Analytics
+==========================================
+Total Valid Trips  : 10
+Total Invalid Trips: 7
 
-[PARSE SUMMARY]
-  Valid records loaded : 10
-  Records skipped      : 7
+Skipped Records (invalid data):
+  [SKIP] Line 12: Expected 5 fields but found 3. Raw: [D106,Sedan,5.0]
+  [SKIP] Line 13: Trip distance 'abc' is not a valid number.
+  [SKIP] Line 14: Customer rating 6.0 is outside valid range [1.0, 5.0].
+  [SKIP] Line 15: Fare cannot be negative (-50.0).
+  [SKIP] Line 16: Trip distance cannot be negative (-3.0).
+  [SKIP] Line 17: Invalid vehicle type 'Hatchback'. Accepted: SEDAN, SUV.
+  [SKIP] Line 18: DriverID is blank.
 
-[SKIPPED / INVALID RECORDS]
-  WARNING: Line 12: Expected 5 fields but found 3. Raw: [D106,Sedan,5.0]
-  WARNING: Line 13: Trip distance 'abc' is not a valid number.
-  WARNING: Line 14: Customer rating 6.0 is outside valid range [1.0, 5.0].
-  WARNING: Line 15: Fare cannot be negative (-50.0).
-  WARNING: Line 16: Trip distance cannot be negative (-3.0).
-  WARNING: Line 17: Invalid vehicle type 'Hatchback'. Accepted: SEDAN, SUV.
-  WARNING: Line 18: DriverID is blank.
+Average Rating by Driver:
+  D104     -> 4.80
+  D101     -> 4.70
+  D102     -> 4.00
+  D103     -> 3.20
+  D105     -> 3.05
 
-=======================================================
-  SECTION 1: AVERAGE RATING BY DRIVER (desc)
--------------------------------------------------------
-  DriverID    Avg Rating      Trips
--------------------------------------------------------
-  D104        4.80            2
-  D101        4.70            2
-  D102        4.00            2
-  D103        3.20            2
-  D105        3.05            2
+Most Efficient Trip:
+  Driver  : D104
+  Vehicle : SUV
+  Distance: 15.0 km
+  Fare    : 420.00
+  Earnings Per Km: 28.00
 
-=======================================================
-  SECTION 2: MOST EFFICIENT TRIP (fare / km)
--------------------------------------------------------
-  Driver   : D104
-  Vehicle  : SUV
-  Distance : 15.0 km
-  Fare     : 420.00
-  Fare/Km  : 28.00
+Underperforming Drivers (avg rating < 3.5):
+  D105     -> Average Rating: 3.05
+  D103     -> Average Rating: 3.20
 
-=======================================================
-  SECTION 3: UNDERPERFORMING DRIVERS (avg rating < 3.5)
--------------------------------------------------------
-  *** PERFORMANCE WARNING ***
-  DriverID    Avg Rating
--------------------------------------------------------
-  D105        3.05
-  D103        3.20
-
-=======================================================
-  BONUS: TOTAL FARE BY VEHICLE TYPE
--------------------------------------------------------
-  VehicleType   Total Fare
--------------------------------------------------------
-  SUV           1230.00
-  Sedan         830.00
-
-=======================================================
-  END OF REPORT
-=======================================================
+==========================================
 ```
 
 ---
