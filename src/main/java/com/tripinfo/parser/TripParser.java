@@ -9,15 +9,15 @@ import java.util.List;
 public class TripParser {
 
     // Limiting rating range and driver ID length for *assumed* security reasons
-    private static final int    EXPECTED_FIELD_COUNT = 5;
-    private static final float  MIN_RATING           = 1.0;
-    private static final float  MAX_RATING           = 5.0;
-    private static final int    MAX_DRIVER_ID_LEN    = 20;   // security: cap field length
+    private static final int EXPECTED_FIELD_COUNT = 5;
+    private static final double MIN_RATING = 1.0;
+    private static final double MAX_RATING = 5.0;
+    private static final int MAX_DRIVER_ID_LEN = 20; // security: cap field length
 
     // Parsing raw lines extracted from .csv file
     public ParseResult parse(List<String> rawLines) {
-        List<Trip>   validTrips = new ArrayList<>();
-        List<String> errors     = new ArrayList<>();
+        List<Trip> validTrips = new ArrayList<>();
+        List<String> errors = new ArrayList<>();
 
         // Checking for no records
         if (rawLines == null || rawLines.isEmpty()) {
@@ -33,12 +33,15 @@ public class TripParser {
             lineNumber++;
 
             // Checking for a blank line
-            if (line == null || line.isBlank()) continue;
+            if (line == null || line.isBlank())
+                continue;
 
-            // if the starting word is "driverid", it's the title line, ignore it, and move on to the next line
-            if (line.trim().toLowerCase().startsWith("driverid")) continue;
+            // if the starting word is "driverid", it's the title line, ignore it, and move
+            // on to the next line
+            if (line.trim().toLowerCase().startsWith("driverid"))
+                continue;
 
-            // 
+            //
             try {
                 validTrips.add(parseLine(line.trim(), lineNumber));
             } catch (TripParseException e) {
@@ -69,11 +72,11 @@ public class TripParser {
         }
 
         // Assign values to temporary variables for each field.
-        String driverId    = fields[0].trim();
-        String vehicleRaw  = fields[1].trim();
+        String driverId = fields[0].trim();
+        String vehicleRaw = fields[1].trim();
         String distanceRaw = fields[2].trim();
-        String fareRaw     = fields[3].trim();
-        String ratingRaw   = fields[4].trim();
+        String fareRaw = fields[3].trim();
+        String ratingRaw = fields[4].trim();
 
         // Handling invalid driver ID cases
         if (driverId.isEmpty())
@@ -91,7 +94,7 @@ public class TripParser {
 
         // getting non-negative confirmed trip distance and paid fare values
         double tripDistanceKm = parseNonNegativeDouble(distanceRaw, "Trip distance", loc);
-        double farePaid       = parseNonNegativeDouble(fareRaw,     "Fare",          loc);
+        double farePaid = parseNonNegativeDouble(fareRaw, "Fare", loc);
 
         // parsing and storying valid float (not double, it's overkill) customer rating.
         double customerRating;
