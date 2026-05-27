@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
  * On startup, DataLoader reads trips.csv and populates TripStore automatically.
  */
 @SpringBootApplication
-public class tripinfoApiApplication {
+public class TripInfoApiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(tripinfoApiApplication.class, args);
