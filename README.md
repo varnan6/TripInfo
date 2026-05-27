@@ -1,4 +1,4 @@
-# Ride-Hailing Driver Performance Analytics Tool
+# TripInfo: A Ride-Hailing Driver Performance Analytics Tool
 
 A Java 17 application that parses ride-hailing trip records from a CSV file, validates them,
 prints driver performance insights to the console, and exposes a REST API for the same analytics.
