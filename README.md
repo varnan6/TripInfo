@@ -18,6 +18,12 @@ Both layers share the same core model, parser, and service classes.
 
 ---
 
+---
+
+## Architecture and Flow Diagram
+
+![Arch-flow diagram](flow_diagram.svg)
+
 ## Java Version
 
 Java 17 (Spring Boot 3.2.5 requires Java 17+).
