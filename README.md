@@ -12,9 +12,9 @@ The REST API is hosted on Render:
 |                  | URL                                                 |
 | ---------------- | --------------------------------------------------- |
 | **Base URL**     | https://tripinfo.onrender.com/                      |
-| **Swagger UI**   | https://tripinfo.onrender.com/swagger-ui.html       |
-| **OpenAPI JSON** | https://tripinfo.onrender.com/api-docs              |
-| **OpenAPI YAML** | https://tripinfo.onrender.com/api-docs.yaml         |
+| **Swagger UI**   | https://tripinfo.onrender.com/swagger-ui/index.html |
+| **OpenAPI JSON** | https://tripinfo.onrender.com/v3/api-docs           |
+| **OpenAPI YAML** | https://tripinfo.onrender.com/v3/api-docs.yaml      |
 
 > **Note:** The API is hosted on Render's free tier. If it hasn't received traffic recently,
 > the first request may take ~30 seconds to wake up.
