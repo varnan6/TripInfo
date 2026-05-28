@@ -13,7 +13,7 @@
     </parent>
 
     <groupId>com.tripinfo</groupId>
-    <artifactId>ride-hailing-api</artifactId>
+    <artifactId>trip-info-api</artifactId>
     <version>1.0.0</version>
     <name>Ride-Hailing Analytics API</name>
 
