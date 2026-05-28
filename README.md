@@ -5,18 +5,32 @@ prints driver performance insights to the console, and exposes a REST API for th
 
 ---
 
+## Live Deployment
+
+The REST API is hosted on Render:
+
+|                  | URL                                                 |
+| ---------------- | --------------------------------------------------- |
+| **Base URL**     | https://trip-info-api.onrender.com                  |
+| **Swagger UI**   | https://trip-info-api.onrender.com/swagger-ui.html  |
+| **OpenAPI JSON** | https://trip-info-api.onrender.com/v3/api-docs      |
+| **OpenAPI YAML** | https://trip-info-api.onrender.com/v3/api-docs.yaml |
+
+> **Note:** The API is hosted on Render's free tier. If it hasn't received traffic recently,
+> the first request may take ~30 seconds to wake up.
+
+---
+
 ## Project Overview
 
 The application is split into two independent layers:
 
 - **Console App** — reads `trips.csv`, validates every record, and prints a formatted analytics
   report to stdout. Built with standard Java only (no Spring Boot).
-- **REST API** _(optional bonus)_ — a Spring Boot application that loads the same CSV on startup
+- **REST API** — a Spring Boot application that loads the same CSV on startup
   and exposes six HTTP endpoints for the same analytics, plus a POST endpoint to add new trips.
 
 Both layers share the same core model, parser, and service classes.
-
----
 
 ---
 
@@ -60,11 +74,15 @@ src/main/java/com/tripinfo/
       EfficientTripResponse.java Extends TripResponse, adds earningsPerKm
       DriverRatingResponse.java  { driverId, averageRating }
       SummaryResponse.java       Combined analytics summary
+  config/
+    OpenApiConfig.java           Springdoc OpenAPI metadata (title, version, servers)
   security/
     RateLimitFilter.java         100 req/min per IP; HTTP 429 on breach
   TripInfoApiApplication.java    Spring Boot entry point
 trips.csv                        Sample dataset (10 valid + 7 edge-case records)
-pom.xml                          Maven build — Spring Boot 3.2.5, web + validation
+pom.xml                          Maven build — Spring Boot 3.2.5, web + validation + springdoc
+Dockerfile                       Multi-stage Docker build for Render deployment
+render.yaml                      Render deployment configuration
 ```
 
 ---
@@ -126,8 +144,10 @@ mvn spring-boot:run
 The server starts on **port 8080**. Place `trips.csv` in the directory from which you run the
 command (the `app.data.file` property in `application.properties` controls the path).
 
-On startup, `DataLoader` reads and parses the CSV automatically. Any invalid records are printed
-to the console as warnings — the API starts regardless.
+Once running, the interactive API docs are available at:
+
+- **Swagger UI:** http://localhost:8080/swagger-ui.html
+- **OpenAPI JSON:** http://localhost:8080/v3/api-docs
 
 ---
 
@@ -146,22 +166,22 @@ to the console as warnings — the API starts regardless.
 
 ```bash
 # Get all trips
-curl http://localhost:8080/api/trips
+curl https://trip-info-api.onrender.com/api/trips
 
 # Get driver ratings
-curl http://localhost:8080/api/analytics/driver-ratings
+curl https://trip-info-api.onrender.com/api/analytics/driver-ratings
 
 # Most efficient trip
-curl http://localhost:8080/api/analytics/most-efficient-trip
+curl https://trip-info-api.onrender.com/api/analytics/most-efficient-trip
 
 # Underperforming drivers
-curl http://localhost:8080/api/analytics/underperforming-drivers
+curl https://trip-info-api.onrender.com/api/analytics/underperforming-drivers
 
 # Summary report
-curl http://localhost:8080/api/analytics/summary
+curl https://trip-info-api.onrender.com/api/analytics/summary
 
 # Add a new trip
-curl -X POST http://localhost:8080/api/trips \
+curl -X POST https://trip-info-api.onrender.com/api/trips \
   -H "Content-Type: application/json" \
   -d '{
     "driverId": "D106",
