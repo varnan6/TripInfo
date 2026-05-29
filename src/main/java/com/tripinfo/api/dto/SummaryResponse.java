@@ -2,6 +2,7 @@ package com.tripinfo.api.dto;
 
 import java.util.List;
 
+// Stores summary of trips and its attributes
 public class SummaryResponse {
 
     private int totalValidTrips;
@@ -13,6 +14,7 @@ public class SummaryResponse {
     public SummaryResponse() {
     }
 
+    // Getter and setter methods
     public int getTotalValidTrips() {
         return totalValidTrips;
     }

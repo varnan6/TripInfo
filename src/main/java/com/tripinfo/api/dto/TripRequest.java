@@ -9,6 +9,8 @@ import jakarta.validation.constraints.*;
  */
 public class TripRequest {
 
+    /* Adding necessary restrictions to attributes */
+
     @NotBlank(message = "driverId must not be blank")
     @Size(max = 20, message = "driverId must not exceed 20 characters")
     private String driverId;
@@ -29,7 +31,7 @@ public class TripRequest {
     @DecimalMax(value = "5.0", message = "customerRating must be <= 5.0")
     private Double customerRating;
 
-    // Getters & setters (no Lombok per assignment constraints)
+    // Getters & setters (no Lombok as stated in assignment)
     public String getDriverId() {
         return driverId;
     }

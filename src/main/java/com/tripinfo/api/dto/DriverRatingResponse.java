@@ -4,12 +4,14 @@ import com.tripinfo.service.DriverSummary;
 
 public class DriverRatingResponse {
 
+    // Stores driver's average rating
     private String driverId;
     private double averageRating;
 
     public DriverRatingResponse() {
     }
 
+    
     public static DriverRatingResponse from(DriverSummary ds) {
         DriverRatingResponse r = new DriverRatingResponse();
         r.driverId = ds.getDriverId();
