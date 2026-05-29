@@ -51,11 +51,6 @@ public class TripParser {
         return new ParseResult(validTrips, errors);
     }
 
-    /** Parses and validates a single Trip from one CSV line. */
-    public Trip parseSingle(String line) throws TripParseException {
-        return parseLine(line.trim(), 0);
-    }
-
     // Line parsing method. Returns Trip object at success.
     private Trip parseLine(String line, int lineNumber) throws TripParseException {
 
