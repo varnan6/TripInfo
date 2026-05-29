@@ -91,7 +91,6 @@ public class TripParser {
         double tripDistanceKm = parseNonNegativeDouble(distanceRaw, "Trip distance", loc);
         double farePaid = parseNonNegativeDouble(fareRaw, "Fare", loc);
 
-        // parsing and storying valid float (not double, it's overkill) customer rating.
         double customerRating;
         try {
             customerRating = Double.parseDouble(ratingRaw);
